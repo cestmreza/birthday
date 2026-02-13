@@ -3,292 +3,362 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تولدت مبارک عسل من 💙</title>
-
+    <title>💙💙دنیای جادویی عسل</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-
     <style>
         :root {
-            --navy: #000c24;
+            --navy: #050a15;
+            --cherry: #7a0d1e;
             --gold: #d4af37;
-            --gold-glow: rgba(212, 175, 55, 0.6);
-            --glass: rgba(255, 255, 255, 0.05);
+            --light-gold: #f9e29c;
+            --glass: rgba(255, 255, 255, 0.1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tahoma', 'Arial', sans-serif; /* در صورت داشتن فونت فارسی لوکس جایگزین شود */
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: radial-gradient(circle at center, #001f3f 0%, #000c24 100%);
-            height: 100vh;
-            overflow: hidden;
+            background: linear-gradient(135deg, var(--navy), #1a0a1f, var(--cherry));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Tahoma', sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            color: white;
-            perspective: 1000px;
         }
 
-        /* Sparkles Background */
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* Glassmorphism Card */
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 40px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            z-index: 10;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
-            inset 0 0 20px rgba(212, 175, 55, 0.1);
-            animation: fadeIn 2s ease-out;
-        }
-
-        /* Image Profile */
-        .profile-container {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px;
-        }
-
-        .profile-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--gold);
-            box-shadow: 0 0 25px var(--gold-glow);
-        }
-
-        /* Typography */
-        h1 {
-            font-size: 2rem;
-            color: white;
-            text-shadow: 0 0 15px var(--gold-glow);
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .gold-text {
-            color: var(--gold);
-            font-weight: bold;
-        }
-
-        /* Typing Effect */
-        .typing-container {
-            min-height: 50px;
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-            color: #e0e0e0;
-        }
-
-        /* Button Style */
-        .love-btn {
-            background: transparent;
-            border: 2px solid var(--gold);
-            color: var(--gold);
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.4s;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 20px;
-        }
-
-        .love-btn:hover {
-            background: var(--gold);
-            color: var(--navy);
-            box-shadow: 0 0 30px var(--gold);
-            transform: translateY(-3px);
-        }
-
-        /* Balloons & Hearts */
-        .balloon {
-            position: absolute;
-            bottom: -100px;
-            width: 40px;
-            height: 50px;
-            border-radius: 50%;
-            z-index: 5;
-            opacity: 0.8;
-            animation: float 10s infinite ease-in;
-        }
-
-        .heart {
-            position: absolute;
-            bottom: -50px;
-            color: #ff4d4d;
-            font-size: 20px;
-            z-index: 5;
-            animation: floatUp 8s infinite linear;
-        }
-
-        /* Audio Controls */
-        .music-ctrl {
+        /* صفحه ورود */
+        #welcome-overlay {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            background: var(--glass);
-            border: 1px solid var(--gold);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #1a0a1f, #050a15);
+            z-index: 5000;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .floating-balloon {
+            width: 100px;
             cursor: pointer;
-            color: var(--gold);
+            animation: bounce 2s infinite ease-in-out;
+            filter: drop-shadow(0 0 20px var(--gold));
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
         }
 
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); left: var(--x); }
-            100% { transform: translateY(-110vh) rotate(20deg); left: var(--x); }
+        /* باکس اصلی ریسپانسیو */
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 25px;
+            text-align: center;
+            margin: 40px auto;
+            z-index: 10;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(1); opacity: 1; left: var(--x); }
-            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; left: var(--x); }
+        .photo-frame {
+            width: 100%;
+            max-width: 350px;
+            aspect-ratio: 3/4; /* حفظ تناسب مستطیلی */
+            margin: 0 auto 20px;
+            border: 4px solid var(--gold);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 25px var(--gold);
         }
 
-        /* Responsive */
-        @media (max-width: 480px) {
-            h1 { font-size: 1.5rem; }
-            .card { padding: 25px; }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        h1 { font-size: 1.8rem; }
+        #typing { font-size: 1.1rem; min-height: 50px; margin-top: 10px; }
+
+        .btn {
+            background: linear-gradient(45deg, var(--gold), var(--light-gold));
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            color: #000;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.4s;
+            margin: 8px;
+            width: 100%; /* در موبایل تمام عرض */
+            max-width: 250px;
+        }
+
+        /* بخش کیک */
+        #cake-section {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 4000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .candles-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .candle-wrapper {
+            position: relative;
+            width: 20px;
+            height: 70px;
+            background: linear-gradient(to bottom, #eec, #997);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .candle-wrapper.off { height: 60px; margin-top: 10px; background: #444; }
+
+        .flame {
+            position: absolute;
+            top: -20px; left: 50%;
+            transform: translateX(-50%);
+            width: 12px; height: 22px;
+            background: orange;
+            border-radius: 50% 50% 20% 20%;
+            filter: drop-shadow(0 0 8px orange);
+            animation: flicker 0.1s infinite alternate;
+        }
+
+        /* نامه ریسپانسیو */
+        .letter-content {
+            background:#fff;
+            color:#333;
+            padding:25px;
+            border-radius:20px;
+            max-width:450px;
+            width: 90%;
+            max-height: 80vh; /* جلوگیری از بزرگ شدن بیش از حد در صفحه */
+            overflow-y: auto; /* اسکرول در صورت طولانی بودن متن */
+            text-align:center;
+            border: 6px double var(--cherry);
+        }
+
+        #custom-alert {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: #333;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            z-index: 6000;
+            width: 85%; max-width: 350px;
+        }
+
+        .music-player {
+            position: fixed;
+            bottom: 15px; left: 15px;
+            background: var(--glass);
+            padding: 8px 15px;
+            border-radius: 30px;
+            border: 1px solid var(--gold);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); }
+            100% { transform: translateX(-50%) scale(1.2); }
+        }
+
+        /* مدیا کوئری برای دسکتاپ */
+        @media (min-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .container { padding: 40px; }
+            .btn { width: auto; font-size: 1rem; }
+            .candle-wrapper { width: 30px; height: 100px; }
         }
     </style>
 </head>
 <body>
 
-<div id="particles-js"></div>
-
-<div class="music-ctrl" onclick="toggleMusic()">
-    <i id="music-icon" class="fas fa-music"></i>
-</div>
-<audio id="bg-music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
-
-<div class="card">
-    <div class="profile-container">
-        <img src="https://via.placeholder.com/150/d4af37/ffffff?text=Asal" alt="Asal" class="profile-img">
+<div id="welcome-overlay" onclick="startExperience()">
+    <h1 style="color: var(--gold); margin-bottom: 20px;">سلام فرشته من...</h1>
+    <p style="margin-bottom: 30px; font-size: 1.1rem;">برای ورود، ستاره رو لمس کن 🎈</p>
+    <div class="floating-balloon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" width="100" alt="Ballooon">
     </div>
+</div>
 
-    <h1 id="title">تولدت مبارک <span class="gold-text">عسلِ من</span> 💙</h1>
-
-    <div class="typing-container" id="typewriter"></div>
-
-    <button class="love-btn" onclick="celebrateMore()">
-        برای همیشه دوستت دارم 💎
+<div class="music-player" id="player-ui" style="display: none;">
+    <span style="font-size: 0.7rem; color: var(--gold);">فرشته ناز... 🎵</span>
+    <button onclick="toggleMusic()" style="background:none; border:none; color:var(--gold); cursor:pointer;">
+        <i id="musicIcon" class="fas fa-pause-circle fa-xl"></i>
     </button>
 </div>
 
+<div class="container">
+    <div class="photo-frame">
+        <img src="src/74bc82d666ea751d35b203fe2ad0e2bd.jpg" alt="Asal">
+    </div>
+    <h1 style="color: var(--gold);">تولدت مبارک عسلِ من 💙</h1>
+    <p id="typing"></p>
+
+    <button class="btn" onclick="openLetter()">💌 نامه‌ای برای تو</button>
+    <button class="btn" onclick="showCake()">برای همیشه دوستت دارم 💎</button>
+</div>
+
+<div id="cake-section">
+    <h2 style="color: var(--gold); margin-bottom: 30px; text-align: center; font-size: 1.2rem;">۵ تا آرزو کن و شمع‌ها رو فوت کن!</h2>
+    <div class="candles-container">
+        <div class="candle-wrapper" onclick="extinguish(this)"><div class="flame"></div></div>
+        <div class="candle-wrapper" onclick="extinguish(this)"><div class="flame"></div></div>
+        <div class="candle-wrapper" onclick="extinguish(this)"><div class="flame"></div></div>
+        <div class="candle-wrapper" onclick="extinguish(this)"><div class="flame"></div></div>
+        <div class="candle-wrapper" onclick="extinguish(this)"><div class="flame"></div></div>
+    </div>
+    <div style="font-size: 80px;">🎂</div>
+</div>
+
+<div id="custom-alert">
+    <h2 style="color: var(--cherry);">هورااااا! 🎉</h2>
+    <p style="margin: 15px 0;">آرزوت برآورده شه عسل من! همیشه در کنارم بمون. ❤️</p>
+    <button class="btn" onclick="closeAlert()">بستن و ادامه جشن</button>
+</div>
+
+<div id="letterModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:4500; justify-content:center; align-items:center; padding:20px;">
+    <div class="letter-content">
+        <h3 style="color:var(--cherry); font-size: 1.5rem; margin-bottom: 10px;">عسلِ عزیزم</h3>
+        <p style="line-height:1.8; font-size: 0.95rem; text-align: justify; direction: rtl;">
+            عسلِ عزیزم 💛✨<br><br>
+            تو همون فرشته‌ی کوچولویی هستی که با اومدنت به زندگیم، تاریکی‌ها رو یکی‌یکی خاموش کردی و جاشون رو با نورِ قشنگِ لبخندت پر کردی 🌤️💫<br>
+            تولدت مبارک، زیباترین ستاره‌ی آسمون من 🌟🎂<br><br>
+            نمی‌دونی چقدر خوشحالم که تو رو دارم… حضورت یه حس امن و گرم توی دلمه، انگار هر وقت باهات حرف می‌زنم دنیا آروم‌تر میشه و قلبم نفس عمیق می‌کشه 🤍🌸<br>
+            با تو حتی روزای سخت هم قابل تحمل میشن، چون می‌دونم آخرش یه صدای مهربون هست که حالمو خوب می‌کنه 💕💕<br><br>
+            تو برای من فقط یه اسم نیستی… یه حس قشنگی، یه آرامش واقعی، یه لبخند بی‌دلیل وسط شلوغی‌های زندگی ⭐<br>
+            کنار تو بودن یعنی حال خوب، یعنی امید، یعنی یه آینده‌ای که قشنگ‌تر از همیشه به نظر میاد 🌈✨<br><br>
+            امیدوارم امسالت پر باشه از خنده‌های از ته دل، آرزوهایی که یکی‌یکی تیک می‌خورن، و لحظه‌هایی که قلبتو برق بندازه 🎁🎉<br>
+            و بدون که من همیشه قدردانِ بودنِ تو توی زندگیمم… چون تو بهترین اتفاق منی 💕🌹<br><br>
+            تولدت هزار بار مبارک، عسلِ آرامشِ من 🎂💫🤍
+        </p>
+        <button class="btn" style="background:var(--cherry); color:#fff; margin-top: 20px;" onclick="this.parentElement.parentElement.style.display='none'">بستن نامه</button>
+    </div>
+</div>
+
+<audio id="bgMusic" loop>
+    <source src="https://dl.musicdel.ir/Music/1400/04/hamid_asghari_fereshtehe_naze%20kocholo.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-    // 1. Confetti on Load
-    window.onload = () => {
-        const duration = 15 * 1000;
-        const animationEnd = Date.now() + duration;
-        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    const music = document.getElementById('bgMusic');
+    let candlesOut = 0;
 
-        function randomInRange(min, max) {
-            return Math.random() * (max - min) + min;
-        }
+    function startExperience() {
+        document.getElementById('welcome-overlay').style.display = 'none';
+        document.getElementById('player-ui').style.display = 'flex';
+        music.play().catch(e => console.log("Audio play failed"));
 
-        const interval = setInterval(function() {
-            const timeLeft = animationEnd - Date.now();
-            if (timeLeft <= 0) return clearInterval(interval);
-
-            const particleCount = 50 * (timeLeft / duration);
-            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-        }, 250);
-
+        confetti({ particleCount: 100, spread: 60, origin: { y: 0.8 }, colors: ['#d4af37', '#7a0d1e'] });
         typeWriter();
-        createElements();
-    };
+        createDecorations();
+    }
 
-    // 2. Typing Effect
-    const text = "همیشه بدرخشی مثل ستاره‌های آسمون... تو لایق بهترین‌هایی ✨";
-    let i = 0;
     function typeWriter() {
-        if (i < text.length) {
-            document.getElementById("typewriter").innerHTML += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 100);
+        const text = "همیشه بدرخشی مثل ستاره‌های آسمون... 💙💎";
+        let i = 0;
+        const target = document.getElementById("typing");
+        target.innerHTML = "";
+        function type() {
+            if (i < text.length) {
+                target.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, 100);
+            }
+        }
+        type();
+    }
+
+    function showCake() {
+        document.getElementById('cake-section').style.display = 'flex';
+    }
+
+    function extinguish(element) {
+        if(!element.classList.contains('off')) {
+            element.classList.add('off');
+            element.querySelector('.flame').style.display = 'none';
+            candlesOut++;
+
+            if(candlesOut === 5) {
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 300,
+                        spread: 90,
+                        origin: { y: 0.5 },
+                        colors: ['#d4af37', '#7a0d1e', '#ffffff']
+                    });
+                    document.getElementById('custom-alert').style.display = 'block';
+                }, 500);
+            }
         }
     }
 
-    // 3. Floating Balloons and Hearts
-    function createElements() {
-        const colors = ['#003366', '#d4af37', '#ffffff', '#001f3f'];
-        for (let j = 0; j < 20; j++) {
-            // Create Balloons
-            setTimeout(() => {
-                const b = document.createElement('div');
-                b.className = 'balloon';
-                b.style.setProperty('--x', Math.random() * 100 + 'vw');
-                b.style.background = colors[Math.floor(Math.random() * colors.length)];
-                b.style.animationDuration = (Math.random() * 5 + 7) + 's';
-                document.body.appendChild(b);
-
-                // Create Hearts
-                const h = document.createElement('i');
-                h.className = 'fas fa-heart heart';
-                h.style.setProperty('--x', Math.random() * 100 + 'vw');
-                h.style.animationDuration = (Math.random() * 3 + 5) + 's';
-                h.style.opacity = Math.random();
-                document.body.appendChild(h);
-            }, j * 300);
-        }
+    function closeAlert() {
+        document.getElementById('custom-alert').style.display = 'none';
+        document.getElementById('cake-section').style.display = 'none';
     }
 
-    // 4. Music Toggle
-    const music = document.getElementById("bg-music");
-    const icon = document.getElementById("music-icon");
     function toggleMusic() {
         if (music.paused) {
             music.play();
-            icon.classList.remove("fa-music");
-            icon.classList.add("fa-pause");
+            document.getElementById('musicIcon').className = 'fas fa-pause-circle fa-2x';
         } else {
             music.pause();
-            icon.classList.remove("fa-pause");
-            icon.classList.add("fa-music");
+            document.getElementById('musicIcon').className = 'fas fa-play-circle fa-2x';
         }
     }
 
-    // 5. Extra Celebration
-    function celebrateMore() {
-        confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#d4af37', '#003366', '#ffffff']
-        });
+    function openLetter() {
+        document.getElementById('letterModal').style.display = 'flex';
+    }
+
+    function createDecorations() {
+        for(let i=0; i<15; i++) {
+            const b = document.createElement('div');
+            b.className = 'decor';
+            b.innerHTML = i % 2 === 0 ? '✨' : '💙';
+            b.style.position = 'fixed';
+            b.style.left = Math.random() * 100 + 'vw';
+            b.style.top = Math.random() * 100 + 'vh';
+            b.style.fontSize = '15px';
+            b.style.pointerEvents = 'none';
+            b.style.opacity = '0.4';
+            document.body.appendChild(b);
+        }
     }
 </script>
 </body>
