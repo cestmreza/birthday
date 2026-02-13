@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تولدت مبارک عسل من 💙</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --navy: #000c24;
+            --gold: #d4af37;
+            --gold-glow: rgba(212, 175, 55, 0.6);
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tahoma', 'Arial', sans-serif; /* در صورت داشتن فونت فارسی لوکس جایگزین شود */
+        }
+
+        body {
+            background: radial-gradient(circle at center, #001f3f 0%, #000c24 100%);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            perspective: 1000px;
+        }
+
+        /* Sparkles Background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Glassmorphism Card */
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            z-index: 10;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
+            inset 0 0 20px rgba(212, 175, 55, 0.1);
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Image Profile */
+        .profile-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--gold);
+            box-shadow: 0 0 25px var(--gold-glow);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 0 15px var(--gold-glow);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .gold-text {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* Typing Effect */
+        .typing-container {
+            min-height: 50px;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: #e0e0e0;
+        }
+
+        /* Button Style */
+        .love-btn {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.4s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .love-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+            box-shadow: 0 0 30px var(--gold);
+            transform: translateY(-3px);
+        }
+
+        /* Balloons & Hearts */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 40px;
+            height: 50px;
+            border-radius: 50%;
+            z-index: 5;
+            opacity: 0.8;
+            animation: float 10s infinite ease-in;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            color: #ff4d4d;
+            font-size: 20px;
+            z-index: 5;
+            animation: floatUp 8s infinite linear;
+        }
+
+        /* Audio Controls */
+        .music-ctrl {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--glass);
+            border: 1px solid var(--gold);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: var(--gold);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); left: var(--x); }
+            100% { transform: translateY(-110vh) rotate(20deg); left: var(--x); }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; left: var(--x); }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; left: var(--x); }
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            .card { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<div class="music-ctrl" onclick="toggleMusic()">
+    <i id="music-icon" class="fas fa-music"></i>
+</div>
+<audio id="bg-music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+    <div class="profile-container">
+        <img src="https://via.placeholder.com/150/d4af37/ffffff?text=Asal" alt="Asal" class="profile-img">
+    </div>
+
+    <h1 id="title">تولدت مبارک <span class="gold-text">عسلِ من</span> 💙</h1>
+
+    <div class="typing-container" id="typewriter"></div>
+
+    <button class="love-btn" onclick="celebrateMore()">
+        برای همیشه دوستت دارم 💎
+    </button>
+</div>
+
+<script>
+    // 1. Confetti on Load
+    window.onload = () => {
+        const duration = 15 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        const interval = setInterval(function() {
+            const timeLeft = animationEnd - Date.now();
+            if (timeLeft <= 0) return clearInterval(interval);
+
+            const particleCount = 50 * (timeLeft / duration);
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+        }, 250);
+
+        typeWriter();
+        createElements();
+    };
+
+    // 2. Typing Effect
+    const text = "همیشه بدرخشی مثل ستاره‌های آسمون... تو لایق بهترین‌هایی ✨";
+    let i = 0;
+    function typeWriter() {
+        if (i < text.length) {
+            document.getElementById("typewriter").innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 100);
+        }
+    }
+
+    // 3. Floating Balloons and Hearts
+    function createElements() {
+        const colors = ['#003366', '#d4af37', '#ffffff', '#001f3f'];
+        for (let j = 0; j < 20; j++) {
+            // Create Balloons
+            setTimeout(() => {
+                const b = document.createElement('div');
+                b.className = 'balloon';
+                b.style.setProperty('--x', Math.random() * 100 + 'vw');
+                b.style.background = colors[Math.floor(Math.random() * colors.length)];
+                b.style.animationDuration = (Math.random() * 5 + 7) + 's';
+                document.body.appendChild(b);
+
+                // Create Hearts
+                const h = document.createElement('i');
+                h.className = 'fas fa-heart heart';
+                h.style.setProperty('--x', Math.random() * 100 + 'vw');
+                h.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                h.style.opacity = Math.random();
+                document.body.appendChild(h);
+            }, j * 300);
+        }
+    }
+
+    // 4. Music Toggle
+    const music = document.getElementById("bg-music");
+    const icon = document.getElementById("music-icon");
+    function toggleMusic() {
+        if (music.paused) {
+            music.play();
+            icon.classList.remove("fa-music");
+            icon.classList.add("fa-pause");
+        } else {
+            music.pause();
+            icon.classList.remove("fa-pause");
+            icon.classList.add("fa-music");
+        }
+    }
+
+    // 5. Extra Celebration
+    function celebrateMore() {
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#d4af37', '#003366', '#ffffff']
+        });
+    }
+</script>
+</body>
+</html>
